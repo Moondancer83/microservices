@@ -8,6 +8,11 @@ services:
       target: dev
     volumes:
       - './basket/src:/app'
+    environment:
+      CACHE_HOST: basket-cache
+      CACHE_PORT: 6379
+  basket-cache:
+    image: redis:alpine
   catalog:
     build:
       context: .
@@ -16,7 +21,7 @@ services:
     volumes:
       - './catalog/src:/app'
     environment:
-      BR_URL: mongodb://catalog-db:27017/catalog
+      DB_URL: mongodb://catalog-db:27017/catalog
 #    env_file:
 #      - <PATH_TO_FILE>
   catalog-db:

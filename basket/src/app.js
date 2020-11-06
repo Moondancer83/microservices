@@ -1,9 +1,11 @@
 const express = require('express');
 const hydrator = require('./hydrator');
+const consumer = require('./consumer');
 
 const app = express();
 const port = 80;
 app.use(express.json());
+consumer();
 
 let basket = {};
 
@@ -16,6 +18,7 @@ app.route('/set-item').patch((req, res) => {
 
 app.route('/show').get(async (req, res) => {
   const hydratedBasket = await hydrator(basket);
+  console.log("Basket", basket, hydratedBasket)
   res.json(hydratedBasket);
 });
 

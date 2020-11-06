@@ -26,6 +26,4 @@ async function hydrateItem (productId, count) {
   return ({product, count});
 }
 
-module.exports = basket => {
-  Promise.all(Object.keys(basket).map(productId => hydrateItem(productId, basket[productId])));
-}
+module.exports = basket => Promise.all(Object.keys(basket).map(productId => hydrateItem(productId, basket[productId])));

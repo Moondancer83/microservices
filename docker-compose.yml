@@ -11,6 +11,10 @@ services:
     environment:
       CACHE_HOST: basket-cache
       CACHE_PORT: 6379
+      EVENT_BUS_URL: amqp://event-bus
+    depends_on:
+      - event-bus
+      - basket-cache
   basket-cache:
     image: redis:alpine
   catalog:
@@ -22,12 +26,16 @@ services:
       - './catalog/src:/app'
     environment:
       DB_URL: mongodb://catalog-db:27017/catalog
-#    env_file:
-#      - <PATH_TO_FILE>
+      EVENT_BUS_URL: amqp://event-bus
+    depends_on:
+      - event-bus
+      - catalog-db
   catalog-db:
     image: mongo
     volumes:
       - '/data/db'
+  event-bus:
+    image: rabbitmq
   gateway:
     build:
       context: .

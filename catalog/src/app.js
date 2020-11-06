@@ -1,6 +1,7 @@
 const express = require('express');
 const { ObjectId } = require('mongodb');
 const connectDb = require('./database/connect');
+const publisher = require('./publisher');
 
 const app = express();
 const port = 80;
@@ -27,6 +28,7 @@ app.route('/product/:id').patch(async (req, res) => {
     { $set: req.body }
   );
   const product = await db.collection('products').findOne({ _id: ObjectId(req.params.id) });
+  await publisher(product);
   res.json(product);
 });
 

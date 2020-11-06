@@ -15,6 +15,10 @@ services:
       target: dev
     volumes:
       - './catalog/src:/app'
+    environment:
+      BR_URL: mongodb://catalog-db:27017/catalog
+#    env_file:
+#      - <PATH_TO_FILE>
   catalog-db:
     image: mongo
     volumes:

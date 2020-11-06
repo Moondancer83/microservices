@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+  basket:
+    build:
+      context: .
+      dockerfile: basket/Dockerfile
+      target: dev
+    volumes:
+      - './basket/src:/app'
+  catalog:
+    build:
+      context: .
+      dockerfile: catalog/Dockerfile
+      target: dev
+    volumes:
+      - './catalog/src:/app'
+  catalog-db:
+    image: mongo
+    volumes:
+      - '/data/db'
+  gateway:
+    build:
+      context: .
+      dockerfile: gateway/Dockerfile
+      target: dev
+    ports:
+      - '8080:80'
+    volumes:
+      - './gateway/src:/app'
+
+# docker compose sets up network automatically

@@ -1,5 +1,6 @@
 FROM node:carbon-jessie AS base
 WORKDIR /app
+# Realetive to docker-compose.yml/build.context
 COPY basket/src/ ./
 EXPOSE 80
 
